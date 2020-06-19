@@ -1,0 +1,72 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema vagas
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema vagas
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `vagas` DEFAULT CHARACTER SET utf8 ;
+-- -----------------------------------------------------
+-- Schema vagas
+-- -----------------------------------------------------
+USE `vagas` ;
+
+-- -----------------------------------------------------
+-- Table `vagas`.`usuarios_grupos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vagas`.`usuarios_grupos` (
+  `id` INT NOT NULL,
+  `grupo` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `vagas`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vagas`.`usuarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  `login` VARCHAR(45) NULL,
+  `senha` VARCHAR(45) NULL,
+  `usuario_grupo_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_usuarios_usuarios_grupos1_idx` (`usuario_grupo_id` ASC),
+  CONSTRAINT `fk_usuarios_usuarios_grupos1`
+    FOREIGN KEY (`usuario_grupo_id`)
+    REFERENCES `vagas`.`usuarios_grupos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `vagas`.`vagas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vagas`.`vagas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(45) NULL,
+  `descricao` VARCHAR(45) NULL,
+  `localTrabalho` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+
+-- INSERÇÕES --
+
+
+
+INSERT INTO usuarios_grupos (id, grupo)
+VALUES (1, 'admin');
+
+
+INSERT INTO usuarios (id, nome, login, senha, usuario_grupo_id)
+VALUES (1, 'ADMIN', 'admin', '123', 1);
